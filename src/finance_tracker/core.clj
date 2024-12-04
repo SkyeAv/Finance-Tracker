@@ -2,8 +2,7 @@
 
 (ns finance-tracker.core
   (:gen-class)
-  (:require [finance-tracker.util.input-output :as io]
-            [finance-tracker.util.database :as db]))
+  (:require [finance-tracker.util.database :as db]))
 
 (defn -check_args [args expected_args]
   (= count args expected_args))
@@ -17,26 +16,35 @@
       (db/-initialize_db)
       (-args_error command usage_error)))
 
+(def valid_income_categories ["salary" "bonus" "gift" "interest" "other"])
+
+(def valid_expense_categories ["food" "rent" "college" "healthcare" "entertainment" "other"])
+
 (defn -analysis [])
 
 (defn -validate_income_category [category]
-  (let [valid_income_categories ["salary" "bonus" "gift" "interest" "other"]]
-    (contains? valid_income_categories category)))
+    (contains? valid_income_categories category))
 
 (defn -income [date amount for_what category]
   (if (-validate_income_category category)
-    ()
+    (do
+      (db/-insert_to_table "income" date amount for_what category)
+      (-analysis))
     (do 
       (println (str "| error | unsupported category | " category " |"))
       (System/exit 1))))
 
 (defn -validate_expense_category [category]
-  (let [valid_expense_categories ["food" "rent" "college" "healthcare" "entertainment" "other"]]
-    (contains? valid_expense_categories category)))
+    (contains? valid_expense_categories category))
+  
+(defn -make_expense_negative [amount]
+  (* -1 amount))
 
 (defn -expense [date amount for_what category]
-  (if (-validate_expense_category category)
-    ()
+  (if (-validate_expense_category category) 
+      (let [amount (-make_expense_negative amount)]
+        (db/-insert_to_table "expense" date amount for_what category)
+        (-analysis))
     (do 
       (println (str "| error | unsupported category | " category " |"))
       (System/exit 1))))
@@ -44,7 +52,15 @@
 (defn -theorhetical [command date amount for_what category]
   (let [valid_theorhetical_commands ["income" "expense"]]
     (if (contains? valid_theorhetical_commands command)
-      ()
+        (if (not= command "income")
+          (let [amount (-make_expense_negative amount)]
+            (db/-insert_to_table "income" date amount for_what category)
+            (-analysis)
+            (db/-delete_from_table "expense" date amount for_what category))
+          (do
+            (db/-insert_to_table "expense" date amount for_what category)
+            (-analysis)
+            (db/-delete_from_table "income" date amount for_what category)))
       (do 
         (println (str "| error | unsupported command | " command " |"))
         (System/exit 1)))))
