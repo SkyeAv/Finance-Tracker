@@ -1,44 +1,21 @@
-# finance_tracker
+# Finance Tracker
 
-FIXME: description
+## Version 1.0.0 by Skye Goetz
 
-## Installation
+This is a non-serious project I built to familiarize myself with Clojure and use a SQLite database to track my finances which I've been meaning to do for a while. I expect to maintain this occasionally and as needed. This is only meant to give me some quick spending analytics based on what I add to the database
 
-Download from http://example.com/FIXME.
+### Usage (Unix)
 
-## Usage
+```bash
+lein run <command> [parameters]
+```
 
-FIXME: explanation
+## Finance Tracker Commands
 
-    $ java -jar finance_tracker-0.1.0-standalone.jar [args]
+### Analysis
 
-## Options
+### Income
 
-FIXME: listing of options this app accepts.
+### Expense
 
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2024 FIXME
-
-This program and the accompanying materials are made available under the
-terms of the Eclipse Public License 2.0 which is available at
-http://www.eclipse.org/legal/epl-2.0.
-
-This Source Code may also be made available under the following Secondary
-Licenses when the conditions for such availability set forth in the Eclipse
-Public License, v. 2.0 are satisfied: GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or (at your
-option) any later version, with the GNU Classpath Exception which is available
-at https://www.gnu.org/software/classpath/license.html.
+### Theorhetical

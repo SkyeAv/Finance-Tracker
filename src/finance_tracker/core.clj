@@ -27,7 +27,7 @@
   (if (-validate_income_category category)
     ()
     (do 
-      (println (str "| error | invalid category | " category " |"))
+      (println (str "| error | unsupported category | " category " |"))
       (System/exit 1))))
 
 (defn -validate_expense_category [category]
@@ -38,10 +38,16 @@
   (if (-validate_expense_category category)
     ()
     (do 
-      (println (str "| error | invalid category | " category " |"))
+      (println (str "| error | unsupported category | " category " |"))
       (System/exit 1))))
 
-(defn -theorhetical [command date amount for_what category])
+(defn -theorhetical [command date amount for_what category]
+  (let [valid_theorhetical_commands ["income" "expense"]]
+    (if (contains? valid_theorhetical_commands command)
+      ()
+      (do 
+        (println (str "| error | unsupported command | " command " |"))
+        (System/exit 1)))))
 
 (defn -main [& args]
   (if (empty? args)
