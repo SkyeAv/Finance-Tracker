@@ -80,26 +80,26 @@
                         usage_error "usage lein run income <date> <amount> <for_what> <category>"]
                     (-universal_processing command args expected_args usage_error))
                   (let [date (second args)
-                        amount (read-string (nth args 3))
-                        for_what (nth args 4)
-                        category (nth args 5)]
+                        amount (read-string (nth args 2))
+                        for_what (nth args 3)
+                        category (nth args 4)]
                     (-income date amount for_what category)))
         "expense" ((let [expected_args 5
                          usage_error "usage: lein run expense <date> <amount> <for_what> <category>"]
                      (-universal_processing command args expected_args usage_error))
                    (let [date (second args)
-                         amount (read-string (nth args 3))
-                         for_what (nth args 4)
-                         category (nth args 5)]
+                         amount (read-string (nth args 2))
+                         for_what (nth args 3)
+                         category (nth args 4)]
                      (-expense date amount for_what category)))
       "theorhetical" ((let [expected_args 6
                             usage_error "usage: lein run theorhetical <command> <date> <amount> <for_what> <category>"]
                         (-universal_processing command args expected_args usage_error))
                       (let [command (second args)
-                            date (nth args 3)
-                            amount (read-string (nth args 4))
-                            for_what (nth args 5)
-                            category (nth args 6)]
+                            date (nth args 2)
+                            amount (read-string (nth args 3))
+                            for_what (nth args 4)
+                            category (nth args 5)]
                         (-theorhetical command date amount for_what category)))
       (do
         (println (str "| error | unsuppoerted <command> | " command " |"))
