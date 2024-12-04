@@ -20,7 +20,11 @@
 
 (def valid_expense_categories ["food" "rent" "college" "healthcare" "entertainment" "other"])
 
-(defn -analysis [])
+(defn -analysis []
+  (let [sum_finances (db/-sum_finances)
+        sum_incomes (db/-sum_incomes)
+        sum_expenses (db/-sum_expenses)]
+    (println (str "| total | " sum_finances " | " sum_incomes " | " sum_expenses " |"))))
 
 (defn -validate_income_category [category]
     (contains? valid_income_categories category))
