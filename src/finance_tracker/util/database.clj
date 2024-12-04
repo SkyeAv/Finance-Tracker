@@ -32,8 +32,11 @@
   (let [query (str "DELETE FROM " table " WHERE " date " = " amount " AND for_what = \"" for_what "\" AND category = \"" category "\"")]
     (-exexecute! query)))
 
+(defn -format_quantity [quantity]
+  (format "%.2f" quantity))
+
 (defn -query_table [query]
-  (first (jdbc/query (conn) query)))
+  (-format_quantity (first (jdbc/query (conn) query))))
 
 (defn -sum_incomes []
   (let [query "SELECT SUM(amount) FROM income"]

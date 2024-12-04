@@ -20,11 +20,39 @@
 
 (def valid_expense_categories ["food" "rent" "college" "healthcare" "entertainment" "other"])
 
+(defn -format_percentage [percentage]
+  (format "%.2f" percentage))
+
+(defn -get_percentage [amount total]
+  (if (zero? total)
+    "0.00%"
+    (-format_percentage (* 100 (/ amount total)))))
+
 (defn -analysis []
   (let [sum_finances (db/-sum_finances)
         sum_incomes (db/-sum_incomes)
         sum_expenses (db/-sum_expenses)]
-    (println (str "| total | " sum_finances " | " sum_incomes " | " sum_expenses " |"))))
+    (println (str "| total | " sum_finances " | " sum_incomes " | " sum_expenses " |"))
+    (doseq [category valid_income_categories]
+      (let [amount (db/-sum_by_category category)
+            percentage (-get_percentage amount sum_incomes)]
+        (println (str "| " category " | " amount " | " percentage " |"))))
+    (doseq [category valid_expense_categories]
+      (let [amount (db/-sum_by_category category)
+            percentage (-get_percentage amount sum_expenses)]
+        (println (str "| " category " | " amount " | " percentage " |")))))
+  (let [sum_last_month (db/-sum_last_month)
+        sum_income_last_month (db/-sum_income_last_month)
+        sum_expense_last_month (db/-sum_expense_last_month)]
+    (println (str "| last month | " sum_last_month " | " sum_income_last_month " | " sum_expense_last_month " |"))
+    (doseq [category valid_income_categories]
+      (let [amount (db/-sum_last_month_by_category category)
+            percentage (-get_percentage amount sum_income_last_month)]
+        (println (str "| " category " | " amount " | " percentage " |"))))
+    (doseq [category valid_expense_categories]
+      (let [amount (db/-sum_last_month_by_category category)
+            percentage (-get_percentage amount sum_expense_last_month)]
+        (println (str "| " category " | " amount " | " percentage " |"))))))
 
 (defn -validate_income_category [category]
     (contains? valid_income_categories category))
