@@ -64,6 +64,18 @@
         query (str "SELECT SUM(amount) FROM income UNION ALL SELECT SUM(amount) FROM expense WHERE date > \"" first_date "\" AND date < \"" last_date "\"")]
       (-query_table query)))
 
+(defn -sum_income_last_month []
+  (let [first_date (first (-get-first-and-last-dates-of-month))
+        last_date (second (-get-first-and-last-dates-of-month))
+        query (str "SELECT SUM(amount) FROM income WHERE date > \"" first_date "\" AND date < \"" last_date "\"")]
+    (-query_table query)))
+
+(defn -sum_expense_last_month []
+  (let [first_date (first (-get-first-and-last-dates-of-month))
+        last_date (second (-get-first-and-last-dates-of-month))
+        query (str "SELECT SUM(amount) FROM expense WHERE date > \"" first_date "\" AND date < \"" last_date "\"")]
+    (-query_table query)))
+
 (defn -sum_last_month_by_category [category]
   (let [first_date (first (-get-first-and-last-dates-of-month))
         last_date (second (-get-first-and-last-dates-of-month))
