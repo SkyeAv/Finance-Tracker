@@ -81,9 +81,9 @@
       (println (str "| error | unsupported category | " category " |"))
       (System/exit 1))))
 
-(defn -theorhetical [command date amount for_what category]
-  (let [valid_theorhetical_commands ["income" "expense"]]
-    (if (contains? valid_theorhetical_commands command)
+(defn -theoretical [command date amount for_what category]
+  (let [valid_theoretical_commands ["income" "expense"]]
+    (if (contains? valid_theoretical_commands command)
         (if (not= command "income")
           (let [amount (-make_expense_negative amount)]
             (db/-insert_to_table "income" date amount for_what category)
@@ -132,7 +132,7 @@
                             amount (read-string (nth args 3))
                             for_what (nth args 4)
                             category (nth args 5)]
-                        (-theorhetical command date amount for_what category)))
+                        (-theoretical command date amount for_what category)))
       (do
         (println (str "| error | unsuppoerted <command> | " command " |"))
         (System/exit 1))))))

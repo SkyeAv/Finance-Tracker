@@ -15,10 +15,10 @@
 
 (defn -initialize_db []
   (let [create_tables 
-        ["CREATE TABLE IF NOT EXISTS income (date TEXT PRIMARY KEY, income FLOAT, for_what TEXT, category TEXT)"
-         "CREATE TABLE IF NOT EXISTS expense (date TEXT PRIMARY KEY, expense FLOAT, for_what TEXT, category TEXT)"
+        ["CREATE TABLE IF NOT EXISTS income (date TEXT PRIMARY KEY, amount FLOAT, for_what TEXT, category TEXT)"
+         "CREATE TABLE IF NOT EXISTS expense (date TEXT PRIMARY KEY, amount FLOAT, for_what TEXT, category TEXT)"
          "CREATE INDEX IF NOT EXISTS income_index ON income (date)"
-         "CREATE INDEX IF NOT EXISTS income_index_twoON income (category)"
+         "CREATE INDEX IF NOT EXISTS income_index_two ON income (category)"
          "CREATE INDEX IF NOT EXISTS expense_index ON expense (date)"
          "CREATE INDEX IF NOT EXISTS expense_index_two ON expense (category)"]]
     (doseq [query create_tables]
@@ -29,10 +29,11 @@
     (-exexecute! query)))
 
 (defn -delete_from_table [table date amount for_what category]
-  (let [query (str "DELETE FROM " table " WHERE " date " = " amount " AND for_what = \"" for_what "\" AND category = \"" category "\"")]
+  (let [query (str "DELETE FROM " table " WHERE date = \"" date "\" AND amount = \"" amount  "\" AND for_what = \"" for_what "\" AND category = \"" category "\"")]
     (-exexecute! query)))
 
 (defn -format_quantity [quantity]
+  (println quantity)
   (format "%.2f" quantity))
 
 (defn -query_table [query]
