@@ -5,7 +5,7 @@
   (:require [finance-tracker.util.database :as db]))
 
 (defn -check_args [args expected_args]
-  (= count args expected_args))
+  (= (count args) expected_args))
 
 (defn -args_error [command usage_error]
   (println (str "| error | " command " | " usage_error " |")) 
@@ -124,8 +124,8 @@
                          for_what (nth args 3)
                          category (nth args 4)]
                      (-expense date amount for_what category)))
-      "theorhetical" ((let [expected_args 6
-                            usage_error "usage: lein run theorhetical <command> <date> <amount> <for_what> <category>"]
+      "theoretical" ((let [expected_args 6
+                            usage_error "usage: lein run theoretical <command> <date> <amount> <for_what> <category>"]
                         (-universal_processing command args expected_args usage_error))
                       (let [command (second args)
                             date (nth args 2)

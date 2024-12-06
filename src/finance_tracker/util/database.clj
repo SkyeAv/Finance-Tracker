@@ -7,7 +7,7 @@
             [clj-time.format :as tf]))
 
 (defn conn []
-  (let [db_path "finance_tracker/resources/finance_tracker.db"]
+  (let [db_path "resources/finance_tracker.db"]
   {:dbtype "sqlite" :dbname db_path}))
 
 (defn -exexecute! [query]
@@ -22,7 +22,7 @@
          "CREATE INDEX IF NOT EXISTS expense_index ON expense (date)"
          "CREATE INDEX IF NOT EXISTS expense_index_two ON expense (category)"]]
     (doseq [query create_tables]
-      (-exexecute!( query)))))
+      (-exexecute! query))))
 
 (defn -insert_to_table [table date amount for_what category]
   (let [query (str "INSERT INTO " table " (date, amount, for_what, category) VALUES (\"" date "\", " amount ", \"" for_what "\", \"" category "\")")]
